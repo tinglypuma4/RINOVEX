@@ -1,5 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { gsap } from 'gsap';
+  import '../pages/styles/navbar.css';
 
   let isScrolled = false;
   let isMobileMenuOpen = false;
@@ -36,6 +38,54 @@
     };
     
     window.addEventListener('scroll', handleScroll);
+
+    // SIN ROTACIÓN DEL LOGO - Solo hover effect con GSAP
+    document.querySelectorAll('.logo-link').forEach((logo) => {
+      logo.addEventListener('mouseenter', () => {
+        gsap.to('.logo-img', {
+          scale: 1.08,
+          duration: 0.4,
+          ease: 'power2.out'
+        });
+      });
+      
+      logo.addEventListener('mouseleave', () => {
+        gsap.to('.logo-img', {
+          scale: 1,
+          duration: 0.4,
+          ease: 'power2.out'
+        });
+      });
+    });
+
+    // Hover effect en nav links con GSAP
+    document.querySelectorAll('.nav-link').forEach((link) => {
+      link.addEventListener('mouseenter', () => {
+        gsap.to(link, {
+          y: -3,
+          duration: 0.3,
+          ease: 'power2.out'
+        });
+      });
+      
+      link.addEventListener('mouseleave', () => {
+        gsap.to(link, {
+          y: 0,
+          duration: 0.3,
+          ease: 'power2.out'
+        });
+      });
+    });
+
+    // Animación del botón de contacto
+    gsap.to('.cta-btn', {
+      boxShadow: '0 8px 30px rgba(95, 66, 156, 0.6)',
+      duration: 1.5,
+      yoyo: true,
+      repeat: -1,
+      ease: 'power1.inOut'
+    });
+
     return () => window.removeEventListener('scroll', handleScroll);
   });
 </script>
@@ -47,11 +97,15 @@
       <!-- Logo -->
       <div class="logo-container">
         <a href="#home" on:click={(e) => handleNavClick(e, '#home')} class="logo-link">
-          <img
-            src="/src/assets/images/LOGO.png"
-            alt="RINOVEX Logo"
-            class="logo-img"
-          />
+          <div class="logo-wrapper">
+            <img
+              src="/src/assets/images/LOGO.png"
+              alt="RINOVEX Logo"
+              class="logo-img"
+            />
+            <div class="logo-glow"></div>
+          </div>
+          <span class="logo-text">RINOVEX</span>
         </a>
       </div>
 
@@ -64,7 +118,8 @@
               class="nav-link"
               on:click={(e) => handleNavClick(e, item.href)}
             >
-              {item.label}
+              <span class="nav-link-text">{item.label}</span>
+              <span class="nav-link-line"></span>
             </a>
           </li>
         {/each}
@@ -73,7 +128,12 @@
       <!-- CTA Button (Desktop) -->
       <div class="cta-container">
         <button class="cta-btn">
-          Contacto
+          <span class="cta-text">Contacto</span>
+          <span class="cta-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M3 8L10.89 13.26C11.2187 13.4793 11.6049 13.5963 12 13.5963C12.3951 13.5963 12.7813 13.4793 13.11 13.26L21 8M5 19H19C19.5304 19 20.0391 18.7893 20.4142 18.4142C20.7893 18.0391 21 17.5304 21 17V7C21 6.46957 20.7893 5.96086 20.4142 5.58579C20.0391 5.21071 19.5304 5 19 5H5C4.46957 5 3.96086 5.21071 3.58579 5.58579C3.21071 5.96086 3 6.46957 3 7V17C3 17.5304 3.21071 18.0391 3.58579 18.4142C3.96086 18.7893 4.46957 19 5 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
         </button>
       </div>
 
@@ -104,302 +164,12 @@
           </a>
         {/each}
         <button class="mobile-cta-btn">
-          Contacto
+          <span>Contacto</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M3 8L10.89 13.26C11.2187 13.4793 11.6049 13.5963 12 13.5963C12.3951 13.5963 12.7813 13.4793 13.11 13.26L21 8M5 19H19C19.5304 19 20.0391 18.7893 20.4142 18.4142C20.7893 18.0391 21 17.5304 21 17V7C21 6.46957 20.7893 5.96086 20.4142 5.58579C20.0391 5.21071 19.5304 5 19 5H5C4.46957 5 3.96086 5.21071 3.58579 5.58579C3.21071 5.96086 3 6.46957 3 7V17C3 17.5304 3.21071 18.0391 3.58579 18.4142C3.96086 18.7893 4.46957 19 5 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </button>
       </div>
     </div>
   </div>
 </nav>
-
-<style>
-  /* Navbar principal */
-  .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    background: transparent;
-  }
-
-  .navbar.scrolled {
-    background: rgba(15, 12, 41, 0.95);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  }
-
-  .navbar-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-  }
-
-  .navbar-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 90px;
-    transition: height 0.3s ease;
-  }
-
-  .navbar.scrolled .navbar-content {
-    height: 70px;
-  }
-
-  /* Logo */
-  .logo-container {
-    flex-shrink: 0;
-    z-index: 1001;
-  }
-
-  .logo-link {
-    display: flex;
-    align-items: center;
-  }
-
-  .logo-img {
-    height: 70px;
-    width: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 4px 12px rgba(95, 66, 156, 0.4));
-    transition: all 0.3s ease;
-  }
-
-  .navbar.scrolled .logo-img {
-    height: 50px;
-  }
-
-  .logo-img:hover {
-    transform: scale(1.05);
-    filter: drop-shadow(0 6px 16px rgba(95, 66, 156, 0.6));
-  }
-
-  /* Desktop Menu */
-  .desktop-menu {
-    display: none;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 2.5rem;
-  }
-
-  @media (min-width: 768px) {
-    .desktop-menu {
-      display: flex;
-    }
-  }
-
-  .nav-link {
-    position: relative;
-    padding: 0.5rem 0;
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.9);
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    transition: color 0.3s ease;
-  }
-
-  .nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #5f429c, #3ab0cb);
-    transition: width 0.3s ease;
-  }
-
-  .nav-link:hover {
-    color: #3ab0cb;
-  }
-
-  .nav-link:hover::after {
-    width: 100%;
-  }
-
-  /* CTA Button */
-  .cta-container {
-    display: none;
-  }
-
-  @media (min-width: 768px) {
-    .cta-container {
-      display: block;
-    }
-  }
-
-  .cta-btn {
-    padding: 0.75rem 1.75rem;
-    background: linear-gradient(135deg, #5f429c, #3ab0cb);
-    color: white;
-    font-weight: 700;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(95, 66, 156, 0.4);
-  }
-
-  .cta-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(95, 66, 156, 0.6);
-  }
-
-  /* Mobile Menu Button */
-  .mobile-menu-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    z-index: 1001;
-  }
-
-  @media (min-width: 768px) {
-    .mobile-menu-btn {
-      display: none;
-    }
-  }
-
-  .hamburger {
-    position: relative;
-    width: 24px;
-    height: 18px;
-  }
-
-  .hamburger span {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: white;
-    border-radius: 2px;
-    transition: all 0.3s ease;
-  }
-
-  .hamburger span:nth-child(1) {
-    top: 0;
-  }
-
-  .hamburger span:nth-child(2) {
-    top: 8px;
-  }
-
-  .hamburger span:nth-child(3) {
-    top: 16px;
-  }
-
-  .hamburger.open span:nth-child(1) {
-    top: 8px;
-    transform: rotate(45deg);
-  }
-
-  .hamburger.open span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .hamburger.open span:nth-child(3) {
-    top: 8px;
-    transform: rotate(-45deg);
-  }
-
-  /* Mobile Menu */
-  .mobile-menu {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(15, 12, 41, 0.98);
-    backdrop-filter: blur(20px);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    overflow-y: auto;
-  }
-
-  @media (min-width: 768px) {
-    .mobile-menu {
-      display: none;
-    }
-  }
-
-  .mobile-menu.open {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .mobile-menu-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 6rem 2rem 2rem;
-    gap: 1.5rem;
-  }
-
-  .mobile-nav-link {
-    padding: 1rem 0;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: white;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    transition: all 0.3s ease;
-    position: relative;
-  }
-
-  .mobile-nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #5f429c, #3ab0cb);
-    transition: width 0.3s ease;
-  }
-
-  .mobile-nav-link:hover {
-    color: #3ab0cb;
-  }
-
-  .mobile-nav-link:hover::after {
-    width: 100%;
-  }
-
-  .mobile-cta-btn {
-    margin-top: 2rem;
-    padding: 1rem 2.5rem;
-    background: linear-gradient(135deg, #5f429c, #3ab0cb);
-    color: white;
-    font-weight: 700;
-    font-size: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    box-shadow: 0 6px 20px rgba(95, 66, 156, 0.5);
-    transition: all 0.3s ease;
-  }
-
-  .mobile-cta-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(95, 66, 156, 0.7);
-  }
-</style>

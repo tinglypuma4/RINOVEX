@@ -1,0 +1,654 @@
+/* ===================================
+   NAVBAR.CSS - ESTILOS PARA NAVBAR RINOVEX
+   =================================== */
+
+/* ===================================
+   NAVBAR PRINCIPAL
+   =================================== */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: transparent;
+}
+
+.navbar.scrolled {
+  background: rgba(15, 12, 41, 0.98);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4),
+              0 0 1px rgba(95, 66, 156, 0.5);
+  border-bottom: 1px solid rgba(95, 66, 156, 0.2);
+}
+
+.navbar-container {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 110px;
+  transition: height 0.3s ease;
+}
+
+.navbar.scrolled .navbar-content {
+  height: 85px;
+}
+
+/* ===================================
+   LOGO - MÁS GRANDE CON SOMBRA CLARA (SIN ROTACIÓN)
+   =================================== */
+
+.logo-container {
+  flex-shrink: 0;
+  z-index: 1001;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.logo-link:hover {
+  transform: scale(1.02);
+}
+
+.logo-wrapper {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar.scrolled .logo-wrapper {
+  width: 65px;
+  height: 65px;
+}
+
+/* Logo con sombra clara brillante para que resalte */
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: 
+    drop-shadow(0 0 20px rgba(58, 176, 203, 0.8))
+    drop-shadow(0 0 40px rgba(95, 66, 156, 0.6))
+    drop-shadow(0 8px 25px rgba(255, 255, 255, 0.3));
+  transition: all 0.4s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.logo-img:hover {
+  filter: 
+    drop-shadow(0 0 30px rgba(58, 176, 203, 1))
+    drop-shadow(0 0 50px rgba(95, 66, 156, 0.8))
+    drop-shadow(0 10px 30px rgba(255, 255, 255, 0.4));
+  transform: scale(1.05);
+}
+
+/* Glow effect estático detrás del logo (sin animación pulse) */
+.logo-glow {
+  position: absolute;
+  inset: -30%;
+  background: radial-gradient(
+    circle,
+    rgba(58, 176, 203, 0.5) 0%,
+    rgba(95, 66, 156, 0.4) 40%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  filter: blur(25px);
+  z-index: 1;
+  opacity: 0.8;
+}
+
+/* Texto del logo */
+.logo-text {
+  font-size: 1.75rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #5f429c, #3ab0cb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+  font-family: 'Courier New', monospace;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 20px rgba(58, 176, 203, 0.3);
+}
+
+.navbar.scrolled .logo-text {
+  font-size: 1.5rem;
+}
+
+.logo-link:hover .logo-text {
+  letter-spacing: 0.05em;
+}
+
+/* ===================================
+   DESKTOP MENU - ANIMACIÓN LED ÚNICA
+   =================================== */
+
+.desktop-menu {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 3rem;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .desktop-menu {
+    display: flex;
+  }
+}
+
+/* Línea LED continua debajo de todos los links */
+.desktop-menu::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #5f429c 10%,
+    #3ab0cb 30%,
+    #5f429c 50%,
+    #3ab0cb 70%,
+    #5f429c 90%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: led-flow 4s linear infinite;
+  border-radius: 2px;
+  opacity: 0.7;
+  box-shadow: 0 0 10px rgba(58, 176, 203, 0.5),
+              0 0 20px rgba(95, 66, 156, 0.3);
+}
+
+@keyframes led-flow {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.nav-link {
+  position: relative;
+  display: inline-block;
+  padding: 0.75rem 0;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.nav-link-text {
+  position: relative;
+  font-size: 1rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.nav-link:hover .nav-link-text {
+  color: #3ab0cb;
+  text-shadow: 0 0 15px rgba(58, 176, 203, 0.6);
+}
+
+/* Efecto de brillo en hover individual */
+.nav-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(58, 176, 203, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.nav-link:hover::before {
+  left: 100%;
+}
+
+/* Línea individual que aparece en hover */
+.nav-link-line {
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #3ab0cb;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(58, 176, 203, 0.8);
+}
+
+.nav-link:hover .nav-link-line {
+  width: 100%;
+}
+
+/* ===================================
+   BOTÓN CTA - MÁS LLAMATIVO
+   =================================== */
+
+.cta-container {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .cta-container {
+    display: block;
+  }
+}
+
+.cta-btn {
+  position: relative;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #5f429c, #3ab0cb);
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(95, 66, 156, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow: hidden;
+}
+
+/* Borde brillante */
+.cta-btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, #5f429c, #3ab0cb, #5f429c);
+  border-radius: 50px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background-size: 200% 200%;
+  animation: gradient-rotate 3s linear infinite;
+}
+
+.cta-btn:hover::before {
+  opacity: 1;
+}
+
+/* Efecto shine */
+.cta-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.cta-btn:hover::after {
+  left: 100%;
+}
+
+.cta-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(95, 66, 156, 0.7);
+}
+
+.cta-btn:active {
+  transform: translateY(-1px);
+}
+
+.cta-text {
+  position: relative;
+  z-index: 1;
+}
+
+.cta-icon {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.cta-btn:hover .cta-icon {
+  transform: translateX(3px);
+}
+
+/* ===================================
+   MOBILE MENU BUTTON
+   =================================== */
+
+.mobile-menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: rgba(95, 66, 156, 0.2);
+  border: 2px solid rgba(95, 66, 156, 0.3);
+  border-radius: 12px;
+  cursor: pointer;
+  z-index: 1001;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-btn:hover {
+  background: rgba(95, 66, 156, 0.3);
+  border-color: rgba(95, 66, 156, 0.5);
+  transform: scale(1.05);
+}
+
+@media (min-width: 768px) {
+  .mobile-menu-btn {
+    display: none;
+  }
+}
+
+.hamburger {
+  position: relative;
+  width: 26px;
+  height: 20px;
+}
+
+.hamburger span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hamburger span:nth-child(1) {
+  top: 0;
+}
+
+.hamburger span:nth-child(2) {
+  top: 8.5px;
+}
+
+.hamburger span:nth-child(3) {
+  top: 17px;
+}
+
+.hamburger.open span:nth-child(1) {
+  top: 8.5px;
+  transform: rotate(45deg);
+  background: #3ab0cb;
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.hamburger.open span:nth-child(3) {
+  top: 8.5px;
+  transform: rotate(-45deg);
+  background: #3ab0cb;
+}
+
+/* ===================================
+   MOBILE MENU - MEJORADO
+   =================================== */
+
+.mobile-menu {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(15, 12, 41, 0.98), 
+    rgba(48, 43, 99, 0.98)
+  );
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+}
+
+@media (min-width: 768px) {
+  .mobile-menu {
+    display: none;
+  }
+}
+
+.mobile-menu.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-menu-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 7rem 2rem 3rem;
+  gap: 2rem;
+}
+
+.mobile-nav-link {
+  position: relative;
+  padding: 1.25rem 0;
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: all 0.3s ease;
+}
+
+/* Gradiente en el texto del link móvil */
+.mobile-nav-link:hover {
+  background: linear-gradient(135deg, #5f429c, #3ab0cb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transform: scale(1.05);
+}
+
+/* Línea animada debajo */
+.mobile-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #5f429c, #3ab0cb);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.mobile-nav-link:hover::after {
+  width: 100%;
+}
+
+.mobile-cta-btn {
+  margin-top: 2rem;
+  padding: 1.25rem 3rem;
+  background: linear-gradient(135deg, #5f429c, #3ab0cb);
+  color: white;
+  font-weight: 700;
+  font-size: 1.125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(95, 66, 156, 0.6);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.mobile-cta-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(95, 66, 156, 0.8);
+}
+
+.mobile-cta-btn:active {
+  transform: translateY(-1px);
+}
+
+/* ===================================
+   RESPONSIVE - TABLET
+   =================================== */
+
+@media (max-width: 1024px) {
+  .navbar-container {
+    padding: 0 1.5rem;
+  }
+
+  .desktop-menu {
+    gap: 2rem;
+  }
+
+  .nav-link-text {
+    font-size: 0.9rem;
+  }
+
+  .logo-wrapper {
+    width: 75px;
+    height: 75px;
+  }
+
+  .navbar.scrolled .logo-wrapper {
+    width: 55px;
+    height: 55px;
+  }
+
+  .logo-text {
+    font-size: 1.5rem;
+  }
+
+  .navbar.scrolled .logo-text {
+    font-size: 1.25rem;
+  }
+}
+
+/* ===================================
+   RESPONSIVE - MOBILE
+   =================================== */
+
+@media (max-width: 768px) {
+  .navbar-container {
+    padding: 0 1.25rem;
+  }
+
+  .navbar-content {
+    height: 85px;
+  }
+
+  .navbar.scrolled .navbar-content {
+    height: 70px;
+  }
+
+  .logo-wrapper {
+    width: 60px;
+    height: 60px;
+  }
+
+  .navbar.scrolled .logo-wrapper {
+    width: 50px;
+    height: 50px;
+  }
+
+  .logo-text {
+    font-size: 1.25rem;
+  }
+
+  .navbar.scrolled .logo-text {
+    font-size: 1.125rem;
+  }
+
+  .mobile-nav-link {
+    font-size: 1.5rem;
+  }
+}
+
+/* ===================================
+   ACCESIBILIDAD
+   =================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus visible para teclado */
+.nav-link:focus-visible,
+.cta-btn:focus-visible,
+.mobile-menu-btn:focus-visible {
+  outline: 2px solid #3ab0cb;
+  outline-offset: 4px;
+}
+
+/* ===================================
+   ANIMACIONES COMPARTIDAS
+   =================================== */
+
+@keyframes gradient-rotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
