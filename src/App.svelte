@@ -1,6 +1,6 @@
 <script lang="ts">
   import Navbar from './lib/components/Navbar.svelte';
-import Home from './lib/pages/Home.svelte';
+  import Home from './lib/pages/Home.svelte';
 </script>
 
 <!-- Fondo fijo con gradiente animado -->
