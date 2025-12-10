@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { gsap } from 'gsap';
-  import '../pages/styles/navbar.css';
+  import './styles/navbar.css';
 
   let isScrolled = false;
   let isMobileMenuOpen = false;
